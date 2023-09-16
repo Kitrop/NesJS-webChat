@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/bootstrap-dark.min.css" />
+    <title>Chat</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand">Chat</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="container">
+                <div class="mb-3 mt-3">
+                    <ul style="list-style: none"  id="msgList" class="message-list"></ul>
+                </div>
+                <div class="mb-3 mt-4">
+                    <input placeholder="Ваше имя"  id="inputUsername" type="text" class="form-control username-input">
+                </div>
+                <div class="mb-3 mt-4">
+                    <input placeholder="Ваше сообщение"  id="inputMessage" type="text" class="form-control message-input">
+                </div>
+                <div class="mb-3 mt-4">
+                    <button class="btn btn-primary send-btn" id="btnSend">Отправить</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js" integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="index.js"></script>
+</body>
+</html>

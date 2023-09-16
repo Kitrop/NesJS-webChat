@@ -1,82 +1,71 @@
 
 const app = () => {
-  const socket = io('http://localhost:4000');
-  const msgInput = document.querySelector('.message-input');
-  const msgList = document.querySelector('.messages-list');
-  const sendBtn = document.querySelector('.send-btn');
-  const usernameInput = document.querySelector('.username-input');
-  const messages = [];
+  const socket = io('http://localhost:4000')
+  const msgList = document.querySelector('#msgList')
+  const inputUsername = document.querySelector('#inputUsername')
+  const inputMessage = document.querySelector('#inputMessage')
+  const btnSend = document.querySelector('#btnSend')
+
+  const messages = []
 
   const getMessages = async () => {
     try {
-      const { data } = await axios.get(
-        'http://localhost:4000/api/chat'
-      );
+      const {data} = await axios.get('http://localhost:4000/api/chat')
 
-      renderMessages(data);
+      renderMessages(data)
 
-      data.forEach((item) => messages.push(item));
-    } catch (error) {
-      console.log(error.message);
+      data.forEach((i) => {
+        messages.push(i)
+      })
+    } catch (e) {
+      console.log(e.message)
     }
-  };
-
-  getMessages();
+  }
 
   const handleSendMessage = (text) => {
-    if (!text.trim()) {
-      return;
-    }
+    if (!text.trim()) return
     sendMessage({
-      username: usernameInput.value || 'Anonymous',
+      username: inputUsername.value || 'anonim',
       text,
-      createdAt: new Date(),
-    });
-  };
+      createdAt: new Date()
+    })
 
-  msgInput.addEventListener(
-    'keydown',
-    (e) => e.keyCode === 13 && handleSendMessage(e.target.value),
-  );
+    inputMessage.value = ''
+  }
 
-  sendBtn.addEventListener('click', () => handleSendMessage(msgInput.value));
+  inputMessage.addEventListener('keydown', (e) => {
+    if (e.keyCode == 13) {
+      handleSendMessage(e.target.value)
+    }
+  })
+
+  btnSend.addEventListener('click', () => {
+    handleSendMessage(inputMessage.value)
+  })
 
   const renderMessages = (data) => {
-    let messages = '';
+    let messages = ''
 
-    data.forEach(
-      (message) =>
-        (messages += `
-        <li class="bg-dark p-2 rounded mb-2 d-flex justify-content-between message">
-            <div class="mr-2">
-                <span class="text-info">${message.username}</span>
-                <p class="text-light">${message.text}</p>
-            </div>
-            <span class="text-muted text-right date">
-                ${new Date(message.createdAt).toLocaleString('ru', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-        })}
-            </span>
-        </li>`),
-    );
+    data.forEach(m => {
+      messages += `<li class="bg-dark p-2 rounded mb-2 d-flex justify-content-between message">
+      <div class="mr-2">
+        <span class="text-info">${m.username}</span>
+        <p class="text-light">${m.text}</p>
+      </div>
+      <span class="text-muted text-right date">${new Date(m.createdAt).toLocaleString('ru')}</span>
+    </li>`;
+    })
 
-    msgList.innerHTML = messages;
-  };
+    msgList.innerHTML = messages
+  }
 
-  const sendMessage = (message) => {
-    console.log(`SendMessage function. Message:`);
-    console.log(message);
-    socket.emit("sendMessage", message);
-  };
+  getMessages()
 
-  socket.on('recMessage', (message) => {
-    messages.push(message);
-    renderMessages(messages);
-  });
-};
+  const sendMessage = (message) => socket.emit('send', message)
+  socket.on('record', (message) => {
+    messages.push(message)
+    renderMessages(messages)
+  })
+}
 
-app();
+app()
