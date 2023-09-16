@@ -1,6 +1,8 @@
 
 const app = () => {
-  const socket = io('http://localhost:4000')
+
+  const socket = io('https://nestchat.onrender.com')
+
   const msgList = document.querySelector('#msgList')
   const inputUsername = document.querySelector('#inputUsername')
   const inputMessage = document.querySelector('#inputMessage')
