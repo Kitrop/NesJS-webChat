@@ -1,10 +1,13 @@
-import { Body, Controller, Get, Post, Render, Res, UsePipes } from "@nestjs/common";
+import { Body, Controller, Get, Post, Redirect, Render, Res, UsePipes } from "@nestjs/common";
 import { AppService } from './app.service';
 import { ChatMessage } from "@prisma/client";
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Get('')
+  @Redirect('/chat')
 
   @Get('/chat')
   @Render('index')
